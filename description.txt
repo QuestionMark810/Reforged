@@ -1,0 +1,1 @@
+Crafting Plus aims to give you more agency over the modifiers items receive when crafting or reforging. When reforging an item, you can now choose your desired modifier for an increased cost. Instead of being crafted, certain items can be 'forged' for improved quality.

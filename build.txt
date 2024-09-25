@@ -1,0 +1,3 @@
+displayName = Crafting Plus
+author = QuestionMark
+version = 1.0
