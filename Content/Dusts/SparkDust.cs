@@ -1,12 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
+﻿using CraftingPlus.Common.OverDust;
 using Terraria.ID;
-using Terraria.ModLoader;
 
-namespace CraftingPlus.Content;
+namespace CraftingPlus.Content.Dusts;
 
-public class SparkDust : ModDust
+public class SparkDust : ModDust, IOverDust
 {
     public override string Texture => "Terraria/Images/Dust";
 
@@ -14,8 +11,7 @@ public class SparkDust : ModDust
 
     public override bool Update(Dust dust)
     {
-        dust.velocity.X *= .98f;
-        dust.velocity.Y += .25f;
+        dust.velocity *= .98f;
         dust.position += dust.velocity;
 
         if ((dust.scale -= .025f) <= 0)

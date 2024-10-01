@@ -10,18 +10,24 @@ namespace CraftingPlus.Common;
 
 public static class Helpers
 {
-    /// <summary> Reforges <see cref="Main.reforgeItem"/> using the Goblin Tinkerer's reforge logic </summary>
-    /// <param name="prefix">The prefix you want for <see cref="Main.reforgeItem"/></param>
-    public static void Reforge(int prefix = -2)
+    /// /// <summary> Reforges <see cref="Main.reforgeItem"/> using the Goblin Tinkerer's reforge logic. </summary>
+    /// <param name="prefix"> The prefix you want for <see cref="Main.reforgeItem"/>. </param>
+    /// /// <param name="allowRepeats"> Whether a repeat prefix can be rolled in one reforge session. </param>
+    public static void Reforge(int prefix = -2, bool allowRepeats = true)
     {
         ItemLoader.PreReforge(Main.reforgeItem);
 
-        Main.reforgeItem.ResetPrefix();
-        Main.reforgeItem.Prefix(prefix);
+        if (!allowRepeats)
+        {
+            RepeatPrefixSystem.RollFromList();
+        }
+        else
+        {
+            Main.reforgeItem.ResetPrefix();
+            Main.reforgeItem.Prefix(prefix);
+        }
 
-        var player = Main.LocalPlayer;
-        Main.reforgeItem.position.X = player.position.X + (float)(player.width / 2) - (float)(Main.reforgeItem.width / 2);
-        Main.reforgeItem.position.Y = player.position.Y + (float)(player.height / 2) - (float)(Main.reforgeItem.height / 2);
+        Main.reforgeItem.Center = Main.LocalPlayer.Center;
         ItemLoader.PostReforge(Main.reforgeItem);
         PopupText.NewText(PopupTextContext.ItemReforge, Main.reforgeItem, Main.reforgeItem.stack, noStack: true);
         SoundEngine.PlaySound(in SoundID.Item37);

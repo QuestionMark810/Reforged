@@ -1,12 +1,8 @@
 using CraftingPlus.Common.UI.Core;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
 
@@ -42,6 +38,7 @@ public class ReforgeMenu : AutoUI
         reforgeButton.OnLeftMouseUp += OnReleaseReforge;
 
         reforgeSlot = new(Main.reforgeItem, .85f);
+        reforgeSlot.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) => RepeatPrefixSystem.Set();
 
         main.Append(reforgeButton);
         main.Append(reforgeSlot);
@@ -50,8 +47,6 @@ public class ReforgeMenu : AutoUI
 
     private void OnClickReforge(UIMouseEvent evt, UIElement listeningElement)
     {
-        //static Minigame SelectRandom() => Main.rand.NextFromList<Minigame>(new Minigames.Forge(), new Minigames.Anvil(), new Minigames.Workbench());
-
         if (UISystem.GetState<Minigame>().UserInterface.CurrentState is Minigame minigame)
         {
             if (minigame.state == Minigame.State.Completed) //Reset
@@ -120,7 +115,6 @@ public class ReforgeMenu : AutoUI
         }
 
         Main.reforgeItem = reforgeSlot.Item;
-
         ShowButton(!Main.reforgeItem.IsAir);
     }
 

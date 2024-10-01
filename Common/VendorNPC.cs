@@ -1,8 +1,6 @@
 ﻿using CraftingPlus.Common.UI;
 using CraftingPlus.Common.UI.Core;
-using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace CraftingPlus.Common;
 

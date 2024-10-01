@@ -1,7 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using System.Linq;
+﻿using System.Linq;
 using Terraria.Audio;
 using Terraria.ID;
 
@@ -70,7 +67,13 @@ public class Forge : Minigame
     {
         SoundEngine.PlaySound(new SoundStyle("CraftingPlus/Assets/Sounds/Hammer"));
         PrefixItem.ReforgeAnimationTime = 1;
-        Helpers.Reforge(-2);
+        Helpers.Reforge(-2, false);
+    }
+
+    public override void OnFail()
+    {
+        base.OnFail();
+        RepeatPrefixSystem.ClearCache();
     }
 
     public override void PostDrawBar(SpriteBatch spriteBatch)

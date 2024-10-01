@@ -1,9 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria.Audio;
+﻿using Terraria.Audio;
 using Terraria.ID;
-using Terraria;
 using System.Collections.Generic;
-using Terraria.ModLoader;
 
 namespace CraftingPlus.Common.UI.Minigames;
 

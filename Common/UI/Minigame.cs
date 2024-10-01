@@ -71,6 +71,15 @@ public abstract class Minigame : AutoUI
         Append(main);
     }
 
+    public void Reset() //Deprecated
+    {
+        state = State.InProgress;
+        timer = 0;
+        Progress = 0;
+
+        OnActivate();
+    }
+
     public override void OnActivate()
     {
         SetPosition();

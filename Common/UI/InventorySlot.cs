@@ -1,8 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
+﻿using Terraria.GameContent;
 using Terraria.UI;
-using Terraria;
-using Microsoft.Xna.Framework;
 
 namespace CraftingPlus.Common.UI;
 

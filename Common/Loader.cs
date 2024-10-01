@@ -1,6 +1,4 @@
-﻿using CraftingPlus.Common.UI;
-using MonoMod.Cil;
-using System.Reflection;
+﻿using MonoMod.Cil;
 using Terraria;
 using Terraria.ModLoader;
 
