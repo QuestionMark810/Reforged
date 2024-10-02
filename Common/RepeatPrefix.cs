@@ -11,6 +11,9 @@ internal static class RepeatPrefix
     {
         static void AddToCache(int prefix)
         {
+            if (prefixCache.Contains(prefix))
+                return;
+
             if (prefixCache.Last() != -1) //The array is full- shuffle down
                 for (int i = 0; i < prefixCache.Length; i++)
                 {
@@ -25,18 +28,16 @@ internal static class RepeatPrefix
                     prefixCache[i] = prefix;
         }
 
-        int prefix = 0;
-        for (int i = 0; i < 30; i++) //Randomly select a non-repeat prefix 30 times before giving up
+        AddToCache(Main.reforgeItem.prefix);
+        for (int i = 0; i < 30; i++)
         {
-            var item = Main.reforgeItem;
-            item.ResetPrefix();
-            item.Prefix(-2);
+            Main.reforgeItem.ResetPrefix();
+            Main.reforgeItem.Prefix(-2); //Tinkerer reforge roll
 
-            if (!prefixCache.Contains(item.prefix))
-                break;
+            if (!prefixCache.Contains(Main.reforgeItem.prefix))
+                break; //Stop selecting prefixes if this prefix isn't a repeat
         }
 
-        AddToCache(prefix);
         Count++;
     }
 
