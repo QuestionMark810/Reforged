@@ -1,6 +1,6 @@
-﻿using CraftingPlus.Common.OverDust;
+﻿using Reforged.Common.OverDust;
 
-namespace CraftingPlus.Content.Dusts;
+namespace Reforged.Content.Dusts;
 
 public class SparkleDust : ModDust, IOverDust
 {

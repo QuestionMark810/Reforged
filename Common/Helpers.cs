@@ -2,7 +2,7 @@
 using Terraria.ID;
 using Terraria.UI;
 
-namespace CraftingPlus.Common;
+namespace Reforged.Common;
 
 public static class Helpers
 {

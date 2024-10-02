@@ -2,7 +2,7 @@
 using Terraria.Audio;
 using Terraria.ID;
 
-namespace CraftingPlus.Common.UI.Minigames;
+namespace Reforged.Common.UI.Minigames;
 
 public class Forge : Minigame
 {
@@ -40,7 +40,7 @@ public class Forge : Minigame
         if (hit)
         {
             SoundEngine.PlaySound(SoundID.Item53 with { Pitch = 0 + Progress });
-            SoundEngine.PlaySound(new SoundStyle("CraftingPlus/Assets/Sounds/GearClick"));
+            SoundEngine.PlaySound(new SoundStyle(Reforged.assetKey + "Sounds/GearClick"));
 
             if (targets.All(x => x.Item2)) //Check if all buttons were hit
                 Complete();
@@ -67,7 +67,7 @@ public class Forge : Minigame
 
     public override void OnComplete()
     {
-        SoundEngine.PlaySound(new SoundStyle("CraftingPlus/Assets/Sounds/Hammer"));
+        SoundEngine.PlaySound(new SoundStyle(Reforged.assetKey + "Sounds/Hammer"));
         PrefixItem.ReforgeAnimationTime = 1;
         Helpers.Reforge(-2, false);
     }

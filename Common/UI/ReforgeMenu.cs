@@ -1,4 +1,4 @@
-using CraftingPlus.Common.UI.Core;
+using Reforged.Common.UI.Core;
 using ReLogic.Content;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
@@ -6,7 +6,7 @@ using Terraria.ID;
 using Terraria.UI;
 using Terraria.UI.Chat;
 
-namespace CraftingPlus.Common.UI;
+namespace Reforged.Common.UI;
 
 /// <summary> Replaces the Tinkerer's default reforge menu. </summary>
 public class ReforgeMenu : AutoUI
@@ -19,8 +19,9 @@ public class ReforgeMenu : AutoUI
 
     public override void OnInitialize()
     {
-        redoTexture = ModContent.Request<Texture2D>("CraftingPlus/Assets/Textures/RedoIcon");
-        gearTexture = ModContent.Request<Texture2D>("CraftingPlus/Assets/Textures/GearIcon");
+        var mod = ModContent.GetInstance<Reforged>();
+        redoTexture = mod.Assets.Request<Texture2D>("Assets/Textures/RedoIcon");
+        gearTexture = mod.Assets.Request<Texture2D>("Assets/Textures/GearIcon");
 
         main = new();
         main.Left.Set(50, 0);

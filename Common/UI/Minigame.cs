@@ -1,4 +1,4 @@
-﻿using CraftingPlus.Common.UI.Core;
+﻿using Reforged.Common.UI.Core;
 using ReLogic.Content;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -7,7 +7,7 @@ using Terraria.Graphics.Renderers;
 using Terraria.ID;
 using Terraria.UI;
 
-namespace CraftingPlus.Common.UI;
+namespace Reforged.Common.UI;
 
 public abstract class Minigame : AutoUI
 {

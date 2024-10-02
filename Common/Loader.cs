@@ -1,10 +1,10 @@
-﻿using CraftingPlus.Common.UI.Core;
-using CraftingPlus.Common.UI;
+﻿using Reforged.Common.UI.Core;
+using Reforged.Common.UI;
 using MonoMod.Cil;
 using Terraria.ID;
 using System.Reflection;
 
-namespace CraftingPlus.Common;
+namespace Reforged.Common;
 
 public class Loader : ILoadable
 {

@@ -1,15 +1,15 @@
-﻿using CraftingPlus.Common.UI;
-using CraftingPlus.Common.UI.Core;
+﻿using Reforged.Common.UI;
+using Reforged.Common.UI.Core;
 using Terraria.ID;
 
-namespace CraftingPlus.Common;
+namespace Reforged.Common;
 
 public class VendorNPC : GlobalNPC
 {
     public override void ModifyShop(NPCShop shop)
     {
         if (shop.NpcType == NPCID.GoblinTinkerer)
-            shop.Add(ModContent.ItemType<Content.ForgeHammer>(), new Condition("Mods.CraftingPlus.Misc.Obtained", 
+            shop.Add(ModContent.ItemType<Content.ForgeHammer>(), new Condition(Reforged.locKey + "Misc.Obtained", 
                 () => !Main.LocalPlayer.GetModPlayer<SaveDataPlayer>().ForgeUnlocked));
     }
 

@@ -1,7 +1,7 @@
-﻿using CraftingPlus.Common.OverDust;
+﻿using Reforged.Common.OverDust;
 using Terraria.ID;
 
-namespace CraftingPlus.Content.Dusts;
+namespace Reforged.Content.Dusts;
 
 public class SparkDust : ModDust, IOverDust
 {

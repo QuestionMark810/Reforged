@@ -1,11 +1,11 @@
-﻿using CraftingPlus.Common.OverDust;
-using CraftingPlus.Content.Dusts;
+﻿using Reforged.Common.OverDust;
+using Reforged.Content.Dusts;
 using ReLogic.Content;
 using System.Collections.ObjectModel;
 using Terraria.GameContent;
 using Terraria.Localization;
 
-namespace CraftingPlus.Common;
+namespace Reforged.Common;
 
 public class PrefixItem : GlobalItem
 {
@@ -114,7 +114,7 @@ public class PrefixItem : GlobalItem
             Main.spriteBatch.Draw(reforge, position - new Vector2(2, 14), null, Main.MouseTextColorReal, 0, Vector2.Zero, Main.UIScale, SpriteEffects.None, 0);
 
             //Draw text
-            var text = Language.GetTextValue("Mods.CraftingPlus.Misc.Forge");
+            var text = Language.GetTextValue(Reforged.locKey + "Misc.Forge");
             Utils.DrawBorderString(Main.spriteBatch, text, position + new Vector2(16, 6), tutorial ? Color.Yellow * (Main.mouseTextColor / 255f) : Main.MouseTextColorReal, 1);
         }
 

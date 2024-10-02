@@ -1,6 +1,6 @@
 ﻿using Terraria.ID;
 
-namespace CraftingPlus.Content;
+namespace Reforged.Content;
 
 public class ForgeHammer : ModItem
 {

@@ -1,4 +1,4 @@
-﻿namespace CraftingPlus.Common.OverDust;
+﻿namespace Reforged.Common.OverDust;
 
 internal interface IOverDust
 {

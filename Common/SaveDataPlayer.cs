@@ -1,6 +1,6 @@
 ﻿using Terraria.ModLoader.IO;
 
-namespace CraftingPlus.Common;
+namespace Reforged.Common;
 
 public class SaveDataPlayer : ModPlayer
 {

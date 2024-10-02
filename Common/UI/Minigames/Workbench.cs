@@ -1,7 +1,7 @@
 ﻿using Terraria.Audio;
 using Terraria.GameInput;
 
-namespace CraftingPlus.Common.UI.Minigames;
+namespace Reforged.Common.UI.Minigames;
 
 public class Workbench : Anvil
 {

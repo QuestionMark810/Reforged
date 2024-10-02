@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Terraria.UI;
 
-namespace CraftingPlus.Common.UI.Core;
+namespace Reforged.Common.UI.Core;
 
 public abstract class AutoUI : UIState
 {

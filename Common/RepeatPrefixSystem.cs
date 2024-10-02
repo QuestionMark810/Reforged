@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace CraftingPlus.Common;
+namespace Reforged.Common;
 
 internal class RepeatPrefixSystem : ModSystem
 {

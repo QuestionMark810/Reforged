@@ -6,7 +6,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
 
-namespace CraftingPlus.Common.UI.Core;
+namespace Reforged.Common.UI.Core;
 
 public class UISystem : ModSystem
 {

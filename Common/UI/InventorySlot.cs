@@ -1,7 +1,7 @@
 ﻿using Terraria.GameContent;
 using Terraria.UI;
 
-namespace CraftingPlus.Common.UI;
+namespace Reforged.Common.UI;
 
 internal class InventorySlot : UIElement
 {

@@ -2,7 +2,7 @@
 using Terraria.ID;
 using System.Collections.Generic;
 
-namespace CraftingPlus.Common.UI.Minigames;
+namespace Reforged.Common.UI.Minigames;
 
 public class Anvil : Minigame
 {

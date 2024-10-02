@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CraftingPlus.Common.OverDust;
+namespace Reforged.Common.OverDust;
 
 internal class OverDustSystem : ModSystem
 {
