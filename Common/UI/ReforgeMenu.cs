@@ -35,7 +35,7 @@ public class ReforgeMenu : AutoUI
         reforgeButton.SetHoverImage(TextureAssets.Reforge[1]);
         reforgeButton.SetVisibility(1, 1);
         reforgeButton.Left.Set(0, 0);
-        ShowButton(true);
+        ShowButton(false);
         reforgeButton.OnLeftMouseDown += OnClickReforge;
 
         reforgeSlot = new(Main.reforgeItem, .85f);
@@ -79,11 +79,12 @@ public class ReforgeMenu : AutoUI
 
     public override void OnDeactivate()
     {
-        if (Main.reforgeItem.IsAir)
+        if (Main.reforgeItem.IsAir) //Return the player's item if it exists in the slot
             return;
 
-        Main.LocalPlayer.QuickSpawnItem(null, Main.reforgeItem.Clone());
+        Main.LocalPlayer.GetItem(Main.LocalPlayer.whoAmI, Main.reforgeItem.Clone(), GetItemSettings.InventoryEntityToPlayerInventorySettings);
         Main.reforgeItem.TurnToAir();
+        ShowButton(false);
     }
 
     public override void Update(GameTime gameTime)
