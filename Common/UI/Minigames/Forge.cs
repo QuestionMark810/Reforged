@@ -54,7 +54,7 @@ public class Forge : Minigame
         if (state != State.InProgress)
             return;
 
-        float rateMult = (RepeatPrefixSystem.Count * 1.5f) + 1;
+        float rateMult = MathHelper.Min(RepeatPrefix.Count * .05f, 1) + 1;
         Progress = MathHelper.Min(1, Progress + .009f * acceleration * rateMult);
         acceleration = MathHelper.Min(acceleration + .01f * rateMult, 1);
 
@@ -75,7 +75,7 @@ public class Forge : Minigame
     public override void OnFail()
     {
         base.OnFail();
-        RepeatPrefixSystem.ClearCache();
+        RepeatPrefix.Reset();
     }
 
     public override void PostDrawBar(SpriteBatch spriteBatch)

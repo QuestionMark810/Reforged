@@ -14,3 +14,14 @@ Misc: {
 	Obtained: Not previously obtained
 	None: "{$Achievements.NoCategory}"
 }
+
+Configs: {
+	ServerConfig: {
+		DisplayName: Server Config
+
+		reforgeMult: {
+			Label: Reforge Cost Multiplier
+			Tooltip: Multiplies the cost of reforging
+		}
+	}
+}

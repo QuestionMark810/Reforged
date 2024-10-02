@@ -7,8 +7,8 @@ internal class ServerConfig : ModConfig
 {
     public override ConfigScope Mode => ConfigScope.ServerSide;
 
-    [Range(0, 10)]
-    [Slider]
     [DefaultValue(1f)]
-    public float ReforgeCostMultiplier { get; set; }
+    [Range(0f, 10f)]
+    [Increment(.25f)]
+    public float reforgeMult;
 }

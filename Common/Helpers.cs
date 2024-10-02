@@ -17,7 +17,7 @@ public static class Helpers
 
         if (!allowRepeats)
         {
-            RepeatPrefixSystem.RollFromList();
+            RepeatPrefix.RollFromList();
         }
         else
         {

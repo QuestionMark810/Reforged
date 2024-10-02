@@ -21,7 +21,7 @@ public class PrefixItem : GlobalItem
 
     public override bool ReforgePrice(Item item, ref int reforgePrice, ref bool canApplyDiscount)
     {
-        reforgePrice = (int)(reforgePrice * ModContent.GetInstance<ServerConfig>().ReforgeCostMultiplier);
+        reforgePrice = (int)(reforgePrice * ModContent.GetInstance<ServerConfig>().reforgeMult);
 
         if (OverrideReforgePrice > -1)
             reforgePrice = OverrideReforgePrice;

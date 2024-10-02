@@ -39,7 +39,7 @@ public class ReforgeMenu : AutoUI
         reforgeButton.OnLeftMouseDown += OnClickReforge;
 
         reforgeSlot = new(Main.reforgeItem, .85f);
-        reforgeSlot.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) => RepeatPrefixSystem.Set();
+        reforgeSlot.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) => RepeatPrefix.Reset();
 
         main.Append(reforgeButton);
         main.Append(reforgeSlot);
