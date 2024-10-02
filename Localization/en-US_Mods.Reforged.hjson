@@ -12,4 +12,5 @@ Items: {
 Misc: {
 	Forge: Right click to begin forging
 	Obtained: Not previously obtained
+	None: "{$Achievements.NoCategory}"
 }

@@ -3,6 +3,7 @@ using ReLogic.Content;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.UI;
 using Terraria.UI.Chat;
 
@@ -162,7 +163,7 @@ public class ReforgeMenu : AutoUI
             new Vector2(pos.X + 50, pos.Y), Main.MouseTextColorReal, 0f, Vector2.Zero, Vector2.One);
     }
 
-    private static string GetCost(out int value) //Adapted vanilla code 
+    private static string GetCost(out int value) //Adapted from vanilla code 
     {
         int num69 = Main.reforgeItem.value * Main.reforgeItem.stack;
         bool canApplyDiscount = true;
@@ -213,7 +214,7 @@ public class ReforgeMenu : AutoUI
             text2 = text2 + "[c/" + Colors.AlphaDarken(Colors.CoinCopper).Hex3() + ":" + num74 + " " + Lang.inter[18].Value + "] ";
 
         if (num69 == 0) //No value
-            text2 = "[c/" + Main.MouseTextColorReal.Hex3() + ":" + "None" + "] ";
+            text2 = "[c/" + Main.MouseTextColorReal.Hex3() + ":" + Language.GetTextValue(Reforged.locKey + "Misc.None") + "] ";
 
         value = num69;
         return text2;

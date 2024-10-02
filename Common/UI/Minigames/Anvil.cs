@@ -11,12 +11,6 @@ public class Anvil : Minigame
     private int timer = timerMax;
     private const int timerMax = 60 * 3;
 
-    public Anvil()
-    {
-        //if (recipe is not null)
-        //    displayItem = recipe.createItem;
-    }
-
     public void SetRecipe(Recipe recipe)
     {
         this.recipe = recipe;

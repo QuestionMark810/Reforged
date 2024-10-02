@@ -40,7 +40,7 @@ public class UISystem : ModSystem
             int index = state.Layer(layers);
             if (index != -1)
                 layers.Insert(index, new LegacyGameInterfaceLayer(
-                    $"{Mod.Name}: UI{state.UniqueId}",
+                    "Reforged: UI" + state.UniqueId,
                     delegate
                     {
                         state.UserInterface.Draw(Main.spriteBatch, new GameTime());

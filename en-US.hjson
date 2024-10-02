@@ -1,0 +1,23 @@
+Mods: {
+	Reforged: {
+		Items: {
+			ForgeHammer: {
+				DisplayName: Forge Hammer
+				Tooltip: ""
+			}
+		}
+
+		Misc.Obtained: Mods.Reforged.Misc.Obtained
+
+		Configs: {
+			ServerConfig: {
+				DisplayName: Server Config
+
+				ReforgeCostMultiplier: {
+					Label: Reforge Cost Multiplier
+					Tooltip: ""
+				}
+			}
+		}
+	}
+}

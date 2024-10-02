@@ -1,1 +1,0 @@
-Allow reforges to be performed continuously as long as the player completes the minigame, and only charge them initially
