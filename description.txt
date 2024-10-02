@@ -1,8 +1,8 @@
 Reforged! aims to improve the process of reforging gear using a unique minigame and minor quality of life changes.
 
 Reforging now takes longer but rewards the player based on their performance.
-Consecutive reforges are less likely to result in repeat prefixes and no longer charge the player, until they fail.
-After using a certain permanent upgrade, some items can be 'forged' rather than crafted to improve their quality.
+Consecutive reforges will rarely result in repeat prefixes and no longer charge the player, until they fail.
+After using a new permanent upgrade sold by the Goblin Tinkerer, some items can be 'forged' rather than crafted to give more favourable initial prefixes.
 
 The cost of reforging is configurable.
 
