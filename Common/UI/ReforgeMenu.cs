@@ -35,7 +35,6 @@ public class ReforgeMenu : AutoUI
         reforgeButton.Left.Set(0, 0);
         ShowButton(true);
         reforgeButton.OnLeftMouseDown += OnClickReforge;
-        reforgeButton.OnLeftMouseUp += OnReleaseReforge;
 
         reforgeSlot = new(Main.reforgeItem, .85f);
         reforgeSlot.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) => RepeatPrefixSystem.Set();
@@ -68,12 +67,6 @@ public class ReforgeMenu : AutoUI
         }
     }
 
-    private void OnReleaseReforge(UIMouseEvent evt, UIElement listeningElement)
-    {
-        if (UISystem.GetState<Minigame>().UserInterface.CurrentState is Minigame minigame)
-            minigame.OnRelease();
-    }
-
     private void ShowButton(bool value)
     {
         if (value)
@@ -84,6 +77,9 @@ public class ReforgeMenu : AutoUI
 
     public override void OnDeactivate()
     {
+        if (Main.reforgeItem.IsAir)
+            return;
+
         Main.LocalPlayer.QuickSpawnItem(null, Main.reforgeItem.Clone());
         Main.reforgeItem.TurnToAir();
     }

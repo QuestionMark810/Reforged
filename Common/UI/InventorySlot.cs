@@ -6,14 +6,16 @@ namespace CraftingPlus.Common.UI;
 internal class InventorySlot : UIElement
 {
     internal Item Item;
-    private readonly float _scale;
+    private readonly float scale;
     internal float opacity;
+    private readonly bool noInteraction;
 
-    public InventorySlot(Item item, float scale = 1f, float opacity = 1f)
+    public InventorySlot(Item item, float scale = 1f, float opacity = 1f, bool noInteraction = false)
     {
         Item = item;
-        _scale = scale;
+        this.scale = scale;
         this.opacity = opacity;
+        this.noInteraction = noInteraction;
 
         Width.Set(TextureAssets.InventoryBack9.Value.Width * scale, 0f);
         Height.Set(TextureAssets.InventoryBack9.Value.Height * scale, 0f);
@@ -23,7 +25,7 @@ internal class InventorySlot : UIElement
     {
         float oldScale = Main.inventoryScale;
         Color oldColor = Main.inventoryBack;
-        Main.inventoryScale = _scale;
+        Main.inventoryScale = scale;
         Main.inventoryBack = Color.Lerp(Color.Transparent, oldColor, opacity);
 
         var context = ItemSlot.Context.PrefixItem;
@@ -32,13 +34,17 @@ internal class InventorySlot : UIElement
         {
             Main.LocalPlayer.mouseInterface = true;
             Main.craftingHide = true;
-            ItemSlot.LeftClick(ref Item, context);
 
-            if (Main.mouseLeftRelease && Main.mouseLeft)
-                Recipe.FindRecipes();
+            if (!noInteraction)
+            {
+                ItemSlot.LeftClick(ref Item, context);
 
-            ItemSlot.RightClick(ref Item, context);
-            ItemSlot.MouseHover(ref Item, context);
+                if (Main.mouseLeftRelease && Main.mouseLeft)
+                    Recipe.FindRecipes();
+
+                ItemSlot.RightClick(ref Item, context);
+                ItemSlot.MouseHover(ref Item, context);
+            }
         }
         ItemSlot.Draw(spriteBatch, ref Item, context, GetDimensions().ToRectangle().TopLeft());
 

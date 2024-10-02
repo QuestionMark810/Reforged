@@ -6,14 +6,33 @@ namespace CraftingPlus.Common.UI.Minigames;
 
 public class Anvil : Minigame
 {
-    private readonly Recipe recipe = null;
+    public Recipe recipe;
 
     private int timer = timerMax;
     private const int timerMax = 60 * 3;
 
     public Anvil()
     {
-        displayItem = Main.reforgeItem;//displayItem = recipe.createItem;
+        //if (recipe is not null)
+        //    displayItem = recipe.createItem;
+    }
+
+    public void SetRecipe(Recipe recipe)
+    {
+        this.recipe = recipe;
+        displayItem = recipe.createItem;
+    }
+
+    public override void OnInitialize()
+    {
+        base.OnInitialize();
+        On_Player.ResetEffects += (On_Player.orig_ResetEffects orig, Player self) =>
+        {
+            orig(self);
+
+            if (Main.mouseLeft && Main.mouseLeftRelease)
+                OnClick(); //Allow OnClick to happen
+        };
     }
 
     public override void OnClick()
@@ -43,8 +62,7 @@ public class Anvil : Minigame
     {
         base.OnComplete();
 
-        return;
-        var item = recipe.createItem;
+        var item = displayItem;
         var allowed = new List<int>();
 
         for (int p = 1; p < (PrefixID.Count + PrefixLoader.PrefixCount); p++)
@@ -53,15 +71,14 @@ public class Anvil : Minigame
                 allowed.Add(p);
         }
 
-        //Loader.CraftItemWithPrefix(recipe, (allowed.Count > 0) ? allowed[Main.rand.Next(allowed.Count)] : -1);
+        Helpers.CraftItemWithPrefix(recipe, (allowed.Count > 0) ? allowed[Main.rand.Next(allowed.Count)] : -1);
     }
 
     public override void OnFail()
     {
         base.OnFail();
 
-        return;
-        var item = recipe.createItem;
+        var item = displayItem;
         var allowed = new List<int>();
 
         for (int p = 1; p < (PrefixID.Count + PrefixLoader.PrefixCount); p++)
@@ -70,6 +87,6 @@ public class Anvil : Minigame
                 allowed.Add(p);
         }
 
-        //Loader.CraftItemWithPrefix(recipe, (allowed.Count > 0) ? allowed[Main.rand.Next(allowed.Count)] : -1);
+        Helpers.CraftItemWithPrefix(recipe, (allowed.Count > 0) ? allowed[Main.rand.Next(allowed.Count)] : -1);
     }
 }

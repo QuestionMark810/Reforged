@@ -1,16 +1,15 @@
-UI: {
-	Forge: Right click to begin forging
-	Selected: Selected
-	Random: Random
-}
-
 Items: {
 	ForgeHammer: {
 		DisplayName: Forge Hammer
 		Tooltip:
 			'''
-			Grants the ability to forge some equipment rather than craft them
-			Forging increases the likelihood of creating a high-quality item
+			Grants the ability to forge certain items rather than craft them
+			Forging increases the chance of creating a high quality item
 			'''
 	}
+}
+
+Misc: {
+	Forge: Right click to begin forging
+	Obtained: Not previously obtained
 }

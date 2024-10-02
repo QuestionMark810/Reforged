@@ -8,6 +8,8 @@ internal class RepeatPrefixSystem : ModSystem
     private static int[] prefixCache;
     private static HashSet<int> rollablePrefixes;
 
+    public static float Count { get; private set; }
+
     public static void RollFromList()
     {
         if (rollablePrefixes.Count == 0)
@@ -49,6 +51,8 @@ internal class RepeatPrefixSystem : ModSystem
                 }
             }
         }
+
+        Count = 1f - ((float)myList.Count / rollablePrefixes.Count);
     }
 
     public static void Set()
@@ -67,6 +71,8 @@ internal class RepeatPrefixSystem : ModSystem
     {
         for (int i = 0; i < prefixCache.Length; i++)
             prefixCache[i] = 0;
+
+        Count = 0;
     }
 
     public override void PostSetupContent()

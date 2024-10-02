@@ -10,11 +10,11 @@ public class ForgeHammer : ModItem
 
     public override bool? UseItem(Player player)
     {
-        /*if (!player.GetModPlayer<Common.SaveDataPlayer>().ForgeUnlocked)
+        if (!player.GetModPlayer<Common.SaveDataPlayer>().ForgeUnlocked)
         {
             Common.SaveDataPlayer.UnlockForgeMechanic(player);
             return true;
-        }*/
+        }
 
         return null;
     }

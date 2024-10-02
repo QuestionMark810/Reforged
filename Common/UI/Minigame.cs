@@ -1,8 +1,5 @@
 ﻿using CraftingPlus.Common.UI.Core;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
@@ -89,8 +86,6 @@ public abstract class Minigame : AutoUI
 
     public virtual void OnClick() { }
 
-    public virtual void OnRelease() { }
-
     public sealed override void Update(GameTime gameTime)
     {
         Update();
@@ -102,14 +97,14 @@ public abstract class Minigame : AutoUI
         if (state != State.InProgress)
             timer++;
 
-        if (!Active())
+        if (!CheckActive())
             UISystem.GetState<Minigame>().UserInterface.SetState(null);
     }
 
     /// <summary> Put general update tasks here. </summary>
     public virtual void Update() { }
 
-    public virtual bool Active() => Main.playerInventory && (timer <= lingerTime || state == State.Completed);
+    public virtual bool CheckActive() => Main.playerInventory && timer <= lingerTime;
 
     protected sealed override void DrawSelf(SpriteBatch spriteBatch)
     {
@@ -119,7 +114,7 @@ public abstract class Minigame : AutoUI
         Main.hidePlayerCraftingMenu = true;
         progressOld = MathHelper.Lerp(progressOld, Progress, .05f);
 
-        if (state == State.InProgress && Main.rand.NextBool() && System.Math.Abs(progressOld - Progress) > .02f) //Add particles
+        if (state == State.InProgress && Main.rand.NextBool() && Math.Abs(progressOld - Progress) > .02f) //Add particles
         {
             var spark = sparkTexture;
             particleLayer.AddParticle(new CreativeSacrificeParticle(spark, null, Main.rand.NextVector2Circular(4f, 3f), new Vector2(0, 15))
@@ -142,7 +137,7 @@ public abstract class Minigame : AutoUI
         var cogA = cogATexture.Value;
         var cogB = cogBTexture.Value;
 
-        var scale = (float)System.Math.Sin(opacity * 2);
+        var scale = (float)Math.Sin(opacity * 2);
         spriteBatch.Draw(cogB, source.TopLeft() + new Vector2(0, 30), null, Color.White, progressOld * -50, cogB.Size() / 2, scale, SpriteEffects.None, 0);
         spriteBatch.Draw(cogA, source.TopLeft() + new Vector2(-5, 5), null, Color.White, progressOld * 50, cogA.Size() / 2, scale, SpriteEffects.None, 0);
 
@@ -156,7 +151,7 @@ public abstract class Minigame : AutoUI
             if (state == State.Failed)
             {
                 var x = TextureAssets.Cd.Value;
-                spriteBatch.Draw(x, position, null, Color.White * .75f, 0, x.Size() / 2, invScale, SpriteEffects.None, 0);
+                spriteBatch.Draw(x, position, null, Color.White * .75f, 0, x.Size() / 2, invScale * (float)Math.Sin(MathHelper.Min(timer * .25f, 2)), SpriteEffects.None, 0);
             }
         }
     }

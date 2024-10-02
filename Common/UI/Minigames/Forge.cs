@@ -31,7 +31,7 @@ public class Forge : Minigame
     {
         bool hit = false;
         for (int i = 0; i < targets.Length; i++)
-            if (System.Math.Abs(Progress - targets[i].Item1) < (targetWindow / 2))
+            if (Math.Abs(Progress - targets[i].Item1) < (targetWindow / 2))
             {
                 targets[i].Item2 = true;
                 hit = true;
@@ -54,14 +54,16 @@ public class Forge : Minigame
         if (state != State.InProgress)
             return;
 
-        Progress = MathHelper.Min(1, Progress + .009f * acceleration);
-        acceleration = MathHelper.Min(acceleration + .01f, 1);
+        float rateMult = (RepeatPrefixSystem.Count * 1.5f) + 1;
+        Progress = MathHelper.Min(1, Progress + .009f * acceleration * rateMult);
+        acceleration = MathHelper.Min(acceleration + .01f * rateMult, 1);
 
         if (Progress == 1)
             Fail();
     }
 
-    public override bool Active() => base.Active() && Main.InReforgeMenu && Main.reforgeItem is not null && !Main.reforgeItem.IsAir;
+    public override bool CheckActive() => (base.CheckActive() || state == State.Completed) 
+        && Main.InReforgeMenu && Main.reforgeItem is not null && !Main.reforgeItem.IsAir;
 
     public override void OnComplete()
     {

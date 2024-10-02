@@ -1,17 +1,16 @@
-﻿using System.Collections.Generic;
-using Terraria.Audio;
-using Terraria.ID;
+﻿using Terraria.Audio;
+using Terraria.GameInput;
 
 namespace CraftingPlus.Common.UI.Minigames;
 
-public class Workbench : Minigame
+public class Workbench : Anvil
 {
-    private readonly Recipe recipe = null;
-
     private readonly float target = Main.rand.NextFloat(.5f, 1f - targetWindow);
     private const float targetWindow = .1f;
     private float acceleration;
     private bool releasedOnce = false;
+
+    public override void OnClick() { }
 
     public override void Update()
     {
@@ -32,7 +31,7 @@ public class Workbench : Minigame
         {
             SoundEngine.PlaySound(new SoundStyle("CraftingPlus/Assets/Sounds/GearClick"));
 
-            if (System.Math.Abs(Progress - target) > (targetWindow / 2))
+            if (Math.Abs(Progress - target) > (targetWindow / 2))
                 Fail();
             else
                 Complete();
@@ -40,38 +39,6 @@ public class Workbench : Minigame
 
         if (Progress == 1)
             Fail();
-    }
-
-    public override void OnComplete()
-    {
-        base.OnComplete();
-        return;
-        var item = recipe.createItem;
-        var allowed = new List<int>();
-
-        for (int p = 1; p < (PrefixID.Count + PrefixLoader.PrefixCount); p++)
-        {
-            if (item.CanApplyPrefix(p) && !PrefixID.Sets.ReducedNaturalChance[p] && p != PrefixID.Annoying)
-                allowed.Add(p);
-        }
-
-        //Loader.CraftItemWithPrefix(recipe, (allowed.Count > 0) ? allowed[Main.rand.Next(allowed.Count)] : -1);
-    }
-
-    public override void OnFail()
-    {
-        base.OnFail();
-        return;
-        var item = recipe.createItem;
-        var allowed = new List<int>();
-
-        for (int p = 1; p < (PrefixID.Count + PrefixLoader.PrefixCount); p++)
-        {
-            if (item.CanApplyPrefix(p) && (PrefixID.Sets.ReducedNaturalChance[p] || p == PrefixID.Annoying))
-                allowed.Add(p);
-        }
-
-        //Loader.CraftItemWithPrefix(recipe, (allowed.Count > 0) ? allowed[Main.rand.Next(allowed.Count)] : -1);
     }
 
     public override void PostDrawBar(SpriteBatch spriteBatch)

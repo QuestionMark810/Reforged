@@ -1,15 +1,13 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.Audio;
+﻿using Terraria.Audio;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace CraftingPlus.Common;
 
 public static class Helpers
 {
+    internal static int PrefixOnCraft = -1;
+
     /// /// <summary> Reforges <see cref="Main.reforgeItem"/> using the Goblin Tinkerer's reforge logic. </summary>
     /// <param name="prefix"> The prefix you want for <see cref="Main.reforgeItem"/>. </param>
     /// /// <param name="allowRepeats"> Whether a repeat prefix can be rolled in one reforge session. </param>
@@ -31,6 +29,13 @@ public static class Helpers
         ItemLoader.PostReforge(Main.reforgeItem);
         PopupText.NewText(PopupTextContext.ItemReforge, Main.reforgeItem, Main.reforgeItem.stack, noStack: true);
         SoundEngine.PlaySound(in SoundID.Item37);
+    }
+
+    public static void CraftItemWithPrefix(Recipe recipe, int prefix)
+    {
+        PrefixOnCraft = prefix;
+        Main.CraftItem(recipe);
+        PrefixOnCraft = -1;
     }
 
     /// <summary> Calls <see cref="ItemSlot.Draw"/> but allows for direct control over scale. </summary>
