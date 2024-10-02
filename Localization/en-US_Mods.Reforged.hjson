@@ -1,0 +1,27 @@
+Items: {
+	ForgeHammer: {
+		DisplayName: Forge Hammer
+		Tooltip:
+			'''
+			Grants the ability to forge certain items rather than craft them
+			Forging increases the chance of creating a high quality item
+			'''
+	}
+}
+
+Misc: {
+	Forge: Right click to begin forging
+	Obtained: Not previously obtained
+	None: "{$Achievements.NoCategory}"
+}
+
+Configs: {
+	ServerConfig: {
+		DisplayName: Server Config
+
+		reforgeMult: {
+			Label: Reforge Cost Multiplier
+			Tooltip: Multiplies the cost of reforging
+		}
+	}
+}

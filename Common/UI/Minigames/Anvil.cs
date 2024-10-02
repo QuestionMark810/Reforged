@@ -1,24 +1,47 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria.Audio;
+﻿using Terraria.Audio;
 using Terraria.ID;
-using Terraria;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Terraria.UI;
 using System.Collections.Generic;
-using Terraria.ModLoader;
-using Terraria.Graphics.Renderers;
 
-namespace CraftingPlus.Common.UI.Minigames;
+namespace Reforged.Common.UI.Minigames;
 
-public class Anvil(Recipe recipe) : Minigame
+public class Anvil : Minigame
 {
-    private readonly Recipe recipe = recipe;
-    private int timer = timerMax;
+    public Recipe recipe;
 
+    private int timer = timerMax;
     private const int timerMax = 60 * 3;
 
-    public override void UpdateSelf()
+    public void SetRecipe(Recipe recipe)
+    {
+        this.recipe = recipe;
+        displayItem = recipe.createItem;
+    }
+
+    public override void OnInitialize()
+    {
+        base.OnInitialize();
+        On_Player.ResetEffects += (On_Player.orig_ResetEffects orig, Player self) =>
+        {
+            orig(self);
+
+            if (Main.mouseLeft && Main.mouseLeftRelease)
+                OnClick(); //Allow OnClick to happen
+        };
+    }
+
+    public override void OnClick()
+    {
+        if (state != State.InProgress)
+            return;
+
+        Progress = MathHelper.Min(1, Progress + .08f);
+        SoundEngine.PlaySound(SoundID.Item53 with { MaxInstances = 3, Pitch = -1 + (Progress * 2) });
+
+        if (Progress == 1)
+            Complete();
+    }
+
+    public override void Update()
     {
         if (state != State.InProgress)
             return;
@@ -26,37 +49,14 @@ public class Anvil(Recipe recipe) : Minigame
             Fail();
 
         timer--;
-        score = MathHelper.Max(0, score - .0025f);
-        delay = MathHelper.Lerp(delay, score, .05f);
-
-        #region particles
-        if (System.Math.Abs(delay - score) > .02f) //Add particles
-        {
-            var spark = Main.Assets.Request<Texture2D>("Images/UI/Creative/Research_Spark");
-
-            particleLayer.AddParticle(new CreativeSacrificeParticle(spark, null, Main.rand.NextVector2Circular(4f, 3f), new Vector2(0, 15))
-            {
-                AccelerationPerFrame = new Vector2(0f, .164f),
-                ScaleOffsetPerFrame = -1f / 45f
-            });
-        }
-        #endregion
-
-        if ((Main.mouseLeft && Main.mouseLeftRelease) || (Main.mouseRight && Main.mouseRightRelease)) //Mouse click
-        {
-            score = MathHelper.Min(1, score + .08f);
-            SoundEngine.PlaySound(SoundID.Item53 with { MaxInstances = 3, Pitch = -1 + (score * 2) });
-
-            if (score == 1)
-                Complete();
-        }
+        Progress = MathHelper.Max(0, Progress - .0025f);
     }
 
     public override void OnComplete()
     {
         base.OnComplete();
 
-        var item = recipe.createItem;
+        var item = displayItem;
         var allowed = new List<int>();
 
         for (int p = 1; p < (PrefixID.Count + PrefixLoader.PrefixCount); p++)
@@ -65,14 +65,14 @@ public class Anvil(Recipe recipe) : Minigame
                 allowed.Add(p);
         }
 
-        Loader.CraftItemWithPrefix(recipe, (allowed.Count > 0) ? allowed[Main.rand.Next(allowed.Count)] : -1);
+        Helpers.CraftItemWithPrefix(recipe, (allowed.Count > 0) ? allowed[Main.rand.Next(allowed.Count)] : -1);
     }
 
     public override void OnFail()
     {
         base.OnFail();
 
-        var item = recipe.createItem;
+        var item = displayItem;
         var allowed = new List<int>();
 
         for (int p = 1; p < (PrefixID.Count + PrefixLoader.PrefixCount); p++)
@@ -81,41 +81,6 @@ public class Anvil(Recipe recipe) : Minigame
                 allowed.Add(p);
         }
 
-        Loader.CraftItemWithPrefix(recipe, (allowed.Count > 0) ? allowed[Main.rand.Next(allowed.Count)] : -1);
-    }
-
-    public override void Draw(SpriteBatch spriteBatch)
-    {
-        base.Draw(spriteBatch);
-        var source = main.GetDimensions().ToRectangle();
-
-        #region progress bar
-        var dimensions = new Point((int)(main.Width.Pixels * .75f), 14);
-        Helpers.DrawResourceBar(spriteBatch, source.Center(), dimensions, score, Opacity);
-        #endregion
-
-        #region item slot
-        var cogA = Main.Assets.Request<Texture2D>("Images/UI/Creative/Research_GearA").Value;
-        var cogB = Main.Assets.Request<Texture2D>("Images/UI/Creative/Research_GearB").Value;
-
-        var scale = (float)System.Math.Sin(Opacity * 2);
-        spriteBatch.Draw(cogB, source.TopLeft() + new Vector2(0, 30), null, Color.White, delay * -50, cogB.Size() / 2, scale, SpriteEffects.None, 0);
-        spriteBatch.Draw(cogA, source.TopLeft() + new Vector2(-5, 5), null, Color.White, delay * 50, cogA.Size() / 2, scale, SpriteEffects.None, 0);
-
-        var invScale = .95f;
-        var position = source.Left() - new Vector2(TextureAssets.InventoryBack.Width() / 2 * invScale, 0);
-        var item = recipe.createItem;
-
-        if (item is not null)
-        {
-            Helpers.DrawItemSlot(spriteBatch, ref item, ItemSlot.Context.PrefixItem, position - (TextureAssets.InventoryBack.Size() / 2 * invScale), invScale);
-
-            if (state == State.Failed)
-            {
-                var x = Main.Assets.Request<Texture2D>("Images/CoolDown").Value;
-                spriteBatch.Draw(x, position, null, Color.White * .75f, 0, x.Size() / 2, invScale, SpriteEffects.None, 0);
-            }
-        }
-        #endregion
+        Helpers.CraftItemWithPrefix(recipe, (allowed.Count > 0) ? allowed[Main.rand.Next(allowed.Count)] : -1);
     }
 }
