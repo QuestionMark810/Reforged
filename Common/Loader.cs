@@ -3,11 +3,13 @@ using Reforged.Common.UI;
 using MonoMod.Cil;
 using Terraria.ID;
 using System.Reflection;
+using log4net;
 
 namespace Reforged.Common;
 
 public class Loader : ILoadable
 {
+    private static ILog Logger => ModContent.GetInstance<Reforged>().Logger;
     public static bool HoverOverCraftingButton { get; private set; }
 
     public void Load(Mod mod)
@@ -40,7 +42,12 @@ public class Loader : ILoadable
         ILCursor c = new(il);
 
         var prefix = typeof(Item).GetMethod(nameof(Item.Prefix), BindingFlags.Public | BindingFlags.Instance, [typeof(int)]);
-        c.GotoNext(x => x.MatchCallvirt(prefix));
+        if (prefix is null || !c.TryGotoNext(x => x.MatchCallvirt(prefix)))
+        {
+            string isNull = (prefix is null) ? ", value is null" : string.Empty;
+            Logger.Debug("Failed goto: " + nameof(Item.Prefix) + isNull);
+            return;
+        }
 
         //Manually override a crafted item's prefix right before ModItem.Create is called
         c.EmitDelegate((int prefix) => { return (Helpers.PrefixOnCraft == -1) ? prefix : Helpers.PrefixOnCraft; });
@@ -63,7 +70,12 @@ public class Loader : ILoadable
         ILCursor c = new(il);
 
         //Don't open the reforge menu
-        c.GotoNext(x => x.MatchLdsfld<Main>("InReforgeMenu"));
+        if (!c.TryGotoNext(x => x.MatchLdsfld<Main>("InReforgeMenu")))
+        {
+            Logger.Debug("Failed goto: " + nameof(Main.InReforgeMenu));
+            return;
+        }
+
         c.Remove();
         c.EmitDelegate(() => false);
     }
