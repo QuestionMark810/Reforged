@@ -25,11 +25,11 @@ public class Workbench : Anvil
             acceleration = MathHelper.Min(acceleration + .05f, 1);
 
             if ((int)(Progress * 100f) % 5 == 0)
-                SoundEngine.PlaySound(new SoundStyle("CraftingPlus/Assets/Sounds/Gears") { Volume = .5f, Pitch = .1f });
+                SoundEngine.PlaySound(new SoundStyle(Reforged.assetKey + "Sounds/Gears") { Volume = .5f, Pitch = .1f });
         }
         else if (Progress > 0)
         {
-            SoundEngine.PlaySound(new SoundStyle("CraftingPlus/Assets/Sounds/GearClick"));
+            SoundEngine.PlaySound(new SoundStyle(Reforged.assetKey + "Sounds/GearClick"));
 
             if (Math.Abs(Progress - target) > (targetWindow / 2))
                 Fail();

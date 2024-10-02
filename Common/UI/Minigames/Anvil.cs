@@ -9,7 +9,7 @@ public class Anvil : Minigame
     public Recipe recipe;
 
     private int timer = timerMax;
-    private const int timerMax = 60 * 3;
+    private const int timerMax = (int)(60 * 3.5f);
 
     public void SetRecipe(Recipe recipe)
     {
@@ -49,7 +49,7 @@ public class Anvil : Minigame
             Fail();
 
         timer--;
-        Progress = MathHelper.Max(0, Progress - .0025f);
+        Progress = MathHelper.Max(0, Progress - .002f);
     }
 
     public override void OnComplete()
