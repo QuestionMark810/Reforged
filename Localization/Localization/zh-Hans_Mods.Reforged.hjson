@@ -1,0 +1,27 @@
+Items: {
+	ForgeHammer: {
+		DisplayName: 锻造之锤
+		Tooltip:
+			'''
+			允许在合成页面锻造物品
+			提升锻造物品时获得高级词缀的概率
+			'''
+	}
+}
+
+Misc: {
+	Forge: 点击右键开始锻造
+	Obtained: 未曾获得
+	None: "{$Achievements.NoCategory}"
+}
+
+Configs: {
+	ServerConfig: {
+		DisplayName: 服务端配置
+
+		reforgeMult: {
+			Label: 重铸费用乘数
+			Tooltip: 重铸的费用成倍增长
+		}
+	}
+}
