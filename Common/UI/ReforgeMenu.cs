@@ -4,6 +4,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
 
@@ -16,7 +17,7 @@ public class ReforgeMenu : AutoUI
 
     private UIElement main;
     private UIImageButton reforgeButton;
-    private InventorySlot reforgeSlot;
+    private ReforgeSlot reforgeSlot;
 
     public override void OnInitialize()
     {
@@ -38,7 +39,7 @@ public class ReforgeMenu : AutoUI
         ShowButton(false);
         reforgeButton.OnLeftMouseDown += OnClickReforge;
 
-        reforgeSlot = new(Main.reforgeItem, .85f);
+        reforgeSlot = new(.85f);
         reforgeSlot.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) => RepeatPrefix.Reset();
 
         main.Append(reforgeButton);
@@ -77,21 +78,20 @@ public class ReforgeMenu : AutoUI
             reforgeButton.Top.Set(-999, 0);
     }
 
-    public override void OnDeactivate()
-    {
-        if (Main.reforgeItem.IsAir) //Return the player's item if it exists in the slot
-            return;
-
-        Main.LocalPlayer.GetItem(Main.LocalPlayer.whoAmI, Main.reforgeItem.Clone(), GetItemSettings.InventoryEntityToPlayerInventorySettings);
-        Main.reforgeItem.TurnToAir();
-        ShowButton(false);
-    }
+    public override void OnDeactivate() => ShowButton(false);
 
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
 
-        if (!Main.InReforgeMenu || Main.LocalPlayer.TalkNPC is null || Main.LocalPlayer.TalkNPC.type != NPCID.GoblinTinkerer)
+        if (Main.LocalPlayer.chest != -1 || Main.npcShop != 0 || Main.LocalPlayer.talkNPC == -1 || Main.InGuideCraftMenu)
+        {
+            Main.InReforgeMenu = false;
+            Main.LocalPlayer.dropItemCheck();
+            Recipe.FindRecipes();
+        }
+
+        if (!Main.InReforgeMenu)
             UISystem.GetState<ReforgeMenu>().UserInterface.SetState(null);
     }
 
@@ -113,7 +113,6 @@ public class ReforgeMenu : AutoUI
             Main.mouseReforge = false;
         }
 
-        Main.reforgeItem = reforgeSlot.Item;
         ShowButton(!Main.reforgeItem.IsAir);
     }
 

@@ -72,7 +72,7 @@ public class PrefixItem : GlobalItem
             float growScale = Main.inventoryScale * .5f * (1f - ReforgeAnimationTime);
             spriteBatch.Draw(ringTexture, position, null, Color.Orange with { A = 0 }, 0, ringTexture.Size() / 2, growScale, SpriteEffects.None, 0);
 
-            spriteBatch.End(); spriteBatch.Begin();
+            spriteBatch.End(); spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, null, null, null, Main.UIScaleMatrix);
         }
 
         ReforgeAnimationTime = ReforgeAnimationTime = MathHelper.Max(ReforgeAnimationTime - .05f, 0);
@@ -85,17 +85,17 @@ public class PrefixItem : GlobalItem
             overrideColor ??= new Color(100, 100, 150) * .9f;
 
             var texture = TextureAssets.InventoryBack.Value;
-
             var loops = width;
+
             for (int i = 0; i < (loops * height); i++)
             {
                 var frameX = ((i % loops) == 0) ? 0 : (((i % loops) == (loops - 1)) ? 2 : 1);
                 var frameY = ((i / loops) == 0) ? 0 : (((i / loops) == (height - 1)) ? 2 : 1);
 
                 var frame = texture.Frame(3, 3, frameX, frameY);
-                var tiledPos = position + new Vector2(frame.Width * (i % loops) * Main.UIScale, frame.Height * (i / loops) * Main.UIScale);
+                var tiledPos = position + new Vector2(frame.Width * (i % loops), frame.Height * (i / loops));
 
-                Main.spriteBatch.Draw(texture, tiledPos, frame, overrideColor.Value, 0, Vector2.Zero, Main.UIScale, SpriteEffects.None, 0);
+                Main.spriteBatch.Draw(texture, tiledPos, frame, overrideColor.Value, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
             }
         }
 
@@ -113,7 +113,7 @@ public class PrefixItem : GlobalItem
 
             //Draw a glowing reforge icon
             var reforge = TextureAssets.Reforge[1].Value;
-            Main.spriteBatch.Draw(reforge, position - new Vector2(2, 14), null, Main.MouseTextColorReal, 0, Vector2.Zero, Main.UIScale, SpriteEffects.None, 0);
+            Main.spriteBatch.Draw(reforge, position - new Vector2(2, 14), null, Main.MouseTextColorReal, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
 
             //Draw text
             var text = Language.GetTextValue(Reforged.locKey + "Misc.Forge");

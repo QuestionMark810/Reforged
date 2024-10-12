@@ -1,1 +1,3 @@
-﻿- Added Chinese localization
+﻿- Fixed items disappearing when shift-clicked into the Tinkerer's reforge slot
+- Fixed some UI elements not scaling correctly with other UI (namely the Forge Hammer's tooltip extension)
+- Fixed the Forge Hammer's anvil minigame registering clicks twice in a single update, making it inherently easier

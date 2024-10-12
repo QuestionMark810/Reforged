@@ -1,5 +1,4 @@
 ﻿using Terraria.Audio;
-using Terraria.GameInput;
 
 namespace Reforged.Common.UI.Minigames;
 
@@ -24,7 +23,7 @@ public class Workbench : Anvil
             Progress = MathHelper.Min(1, Progress + .014f * acceleration);
             acceleration = MathHelper.Min(acceleration + .05f, 1);
 
-            if ((int)(Progress * 100f) % 5 == 0)
+            if ((int)(Progress * 100f) % 8 == 0)
                 SoundEngine.PlaySound(new SoundStyle(Reforged.assetKey + "Sounds/Gears") { Volume = .5f, Pitch = .1f });
         }
         else if (Progress > 0)

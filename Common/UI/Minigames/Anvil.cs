@@ -17,16 +17,24 @@ public class Anvil : Minigame
         displayItem = recipe.createItem;
     }
 
-    public override void OnInitialize()
+    public override void OnActivate()
     {
-        base.OnInitialize();
-        On_Player.ResetEffects += (On_Player.orig_ResetEffects orig, Player self) =>
-        {
-            orig(self);
+        base.OnActivate();
+        On_Player.Update += ReadClick;
+    }
 
-            if (Main.mouseLeft && Main.mouseLeftRelease)
-                OnClick(); //Allow OnClick to happen
-        };
+    public override void OnDeactivate()
+    {
+        base.OnDeactivate();
+        On_Player.Update -= ReadClick;
+    }
+
+    private void ReadClick(On_Player.orig_Update orig, Player self, int i)
+    {
+        orig(self, i);
+
+        if (self == Main.LocalPlayer && Main.mouseLeft && Main.mouseLeftRelease)
+            OnClick(); //Allow OnClick to happen
     }
 
     public override void OnClick()
