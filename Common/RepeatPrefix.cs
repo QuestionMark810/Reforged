@@ -25,7 +25,10 @@ internal static class RepeatPrefix
 
             for (int i = 0; i < prefixCache.Length; i++)
                 if (prefixCache[i] == -1)
-                    prefixCache[i] = prefix;
+                {
+                    prefixCache[i] = prefix; //Log this prefix
+                    break;
+                }
         }
 
         AddToCache(Main.reforgeItem.prefix);
@@ -35,7 +38,7 @@ internal static class RepeatPrefix
             Main.reforgeItem.Prefix(-2); //Tinkerer reforge roll
 
             if (!prefixCache.Contains(Main.reforgeItem.prefix))
-                break; //Stop selecting prefixes if this prefix isn't a repeat
+                break; //Stop rolling
         }
 
         Count++;

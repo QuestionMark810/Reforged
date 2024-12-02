@@ -7,7 +7,7 @@ using log4net;
 
 namespace Reforged.Common;
 
-public class Loader : ILoadable
+public class Loader : ILoadable //Handles any detours and IL edits
 {
     private static ILog Logger => ModContent.GetInstance<Reforged>().Logger;
     public static bool HoverOverCraftingButton { get; private set; }
@@ -15,10 +15,12 @@ public class Loader : ILoadable
     public void Load(Mod mod)
     {
         On_Main.CraftItem += CraftItem;
-        IL_Main.CraftItem += CraftItemWithPrefix;
         On_Main.HoverOverCraftingItemButton += HoverOverCraftingItemButton;
         On_Player.ResetEffects += ResetHoverOverCraftingItemButton;
+        On_Main.DrawInventory += StartReforgeMenu;
+
         IL_Main.DrawInventory += RemoveReforgeButton;
+        IL_Main.CraftItem += CraftItemWithPrefix;
     }
 
     public void Unload() { }
@@ -37,6 +39,26 @@ public class Loader : ILoadable
         else orig(r); //Skip orig
     }
 
+    private void HoverOverCraftingItemButton(On_Main.orig_HoverOverCraftingItemButton orig, int recipeIndex)
+    {
+        HoverOverCraftingButton = true;
+        orig(recipeIndex);
+    }
+
+    private void ResetHoverOverCraftingItemButton(On_Player.orig_ResetEffects orig, Player self)
+    {
+        HoverOverCraftingButton = false;
+        orig(self);
+    }
+
+    private void StartReforgeMenu(On_Main.orig_DrawInventory orig, Main self)
+    {
+        if (Main.InReforgeMenu && UISystem.GetState<ReforgeMenu>().UserInterface.CurrentState is null)
+            UISystem.GetState<ReforgeMenu>().UserInterface.SetState(UISystem.GetState<ReforgeMenu>());
+
+        orig(self);
+    }
+
     private void CraftItemWithPrefix(ILContext il)
     {
         ILCursor c = new(il);
@@ -51,18 +73,6 @@ public class Loader : ILoadable
 
         //Manually override a crafted item's prefix right before ModItem.Create is called
         c.EmitDelegate((int prefix) => { return (Helpers.PrefixOnCraft == -1) ? prefix : Helpers.PrefixOnCraft; });
-    }
-
-    private void HoverOverCraftingItemButton(On_Main.orig_HoverOverCraftingItemButton orig, int recipeIndex)
-    {
-        HoverOverCraftingButton = true;
-        orig(recipeIndex);
-    }
-
-    private void ResetHoverOverCraftingItemButton(On_Player.orig_ResetEffects orig, Player self)
-    {
-        HoverOverCraftingButton = false;
-        orig(self);
     }
 
     private void RemoveReforgeButton(ILContext il)
