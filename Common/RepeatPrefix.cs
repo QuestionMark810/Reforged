@@ -1,41 +1,27 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace Reforged.Common;
 
 internal static class RepeatPrefix
 {
     public static float Count { get; private set; }
-    private static readonly int[] prefixCache = new int[10];
+    private static readonly List<int> prefixCache = [];
+
+    public static bool IsRepeated(int prefix) => prefixCache.Contains(prefix);
 
     public static void RollFromList()
     {
-        static void AddToCache(int prefix)
-        {
-            if (prefixCache.Contains(prefix))
-                return;
+        prefixCache.Add(Main.reforgeItem.prefix);
 
-            if (prefixCache.Last() != -1) //The array is full- shuffle down
-                for (int i = 0; i < prefixCache.Length; i++)
-                {
-                    if (i == (prefixCache.Length - 1))
-                        prefixCache[i] = -1;
-                    else
-                        prefixCache[i] = prefixCache[i + 1];
-                }
-
-            for (int i = 0; i < prefixCache.Length; i++)
-                if (prefixCache[i] == -1)
-                    prefixCache[i] = prefix;
-        }
-
-        AddToCache(Main.reforgeItem.prefix);
-        for (int i = 0; i < 30; i++)
+        for (int i = 0; i < 10; i++) //Multiplied by the number of times Prefix rolls (50)
         {
             Main.reforgeItem.ResetPrefix();
-            Main.reforgeItem.Prefix(-2); //Tinkerer reforge roll
 
-            if (!prefixCache.Contains(Main.reforgeItem.prefix))
-                break; //Stop selecting prefixes if this prefix isn't a repeat
+            if (Main.reforgeItem.Prefix(-2) && Main.reforgeItem.prefix != 0)
+                break;
+
+            if (prefixCache.Count != 0)
+                prefixCache.RemoveAt(0); //We have failed to roll a non-repeat prefix (per PrefixItem.AllowPrefix)
         }
 
         Count++;
@@ -43,9 +29,7 @@ internal static class RepeatPrefix
 
     public static void Reset()
     {
-        for (int i = 0; i < prefixCache.Length; i++)
-            prefixCache[i] = -1;
-
+        prefixCache.Clear();
         Count = 0;
     }
 }

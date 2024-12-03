@@ -1,3 +1,4 @@
-﻿- Fixed items disappearing when shift-clicked into the Tinkerer's reforge slot
-- Fixed some UI elements not scaling correctly with other UI (namely the Forge Hammer's tooltip extension)
-- Fixed the Forge Hammer's anvil minigame registering clicks twice in a single update, making it inherently easier
+﻿- Improved reforge accuracy when attempting to avoid repeat prefixes
+- Changed reforge menu activation to be more consistent in case of other mod interference
+- Updated some textures and visual effects. Added an audio cue when receiving valuable reforges
+- Added a possible 'bonus node' to the tinkerer's reforge minigame, which has a smaller window of opportunity but instantly completes the minigame when struck

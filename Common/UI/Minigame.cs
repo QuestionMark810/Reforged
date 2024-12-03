@@ -61,20 +61,12 @@ public abstract class Minigame : AutoUI
         main.Height.Set(50, 0);
         main.SetPadding(0f);
         main.BackgroundColor = new Color(60, 80, 140, 220);
+        main.BorderColor = new Color(0, 0, 20, 150);
 
         particleLayer = new();
 
         main.Append(particleLayer);
         Append(main);
-    }
-
-    public void Reset() //Deprecated
-    {
-        state = State.InProgress;
-        timer = 0;
-        Progress = 0;
-
-        OnActivate();
     }
 
     public override void OnActivate()

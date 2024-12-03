@@ -1,9 +1,5 @@
-using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Terraria;
-using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace Reforged.Common.UI.Core;
@@ -13,7 +9,6 @@ public class UISystem : ModSystem
     private static readonly HashSet<AutoUI> UIStates = [];
 
     internal static T GetState<T>() where T : AutoUI => UIStates.FirstOrDefault(x => x is T) as T;
-    //internal static void SetActive<T>(bool active) where T : AutoUI => GetState<T>().UserInterface.SetState(active ? GetState<T>() : null);
 
     public override void Load()
     {
