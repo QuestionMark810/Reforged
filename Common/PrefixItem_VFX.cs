@@ -19,7 +19,11 @@ public partial class PrefixItem : GlobalItem
     public static bool RolledRarePrefix()
     {
         int prefix = Main.reforgeItem.prefix;
-        return rarePrefixes.Contains(prefix);
+        float value = 1f;
+
+        PrefixLoader.GetPrefix(prefix)?.ModifyValue(ref value);
+
+        return rarePrefixes.Contains(prefix) || value >= 1.2f;
     }
 
     public static void StartAnimation(int time) => animTime = animTimeMax = time;
