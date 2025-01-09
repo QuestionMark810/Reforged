@@ -1,4 +1,3 @@
-﻿- Improved reforge accuracy when attempting to avoid repeat prefixes
-- Changed reforge menu activation to be more consistent in case of other mod interference
-- Updated some textures and visual effects. Added an audio cue when receiving valuable reforges
-- Added a possible 'bonus node' to the tinkerer's reforge minigame, which has a smaller window of opportunity but instantly completes the minigame when struck
+﻿- Fixed the reforge button not being navigatable using gamepad
+- Adjusted the default reforge button position
+- Fixed an incompatibility with Consistent Reforging's undo function
