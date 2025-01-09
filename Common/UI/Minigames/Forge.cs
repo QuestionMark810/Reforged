@@ -98,8 +98,6 @@ public class Forge : Minigame
         if (state != State.InProgress)
             return;
 
-        Complete(); //DEBUG
-
         float rateMult = MathHelper.Min(RepeatPrefix.Count * .05f, 1) + 1;
         Progress = MathHelper.Min(1, Progress + .009f * acceleration * rateMult);
         acceleration = MathHelper.Min(acceleration + .01f * rateMult, 1);
