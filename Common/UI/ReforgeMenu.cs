@@ -6,12 +6,16 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.UI;
 using Terraria.UI.Chat;
+using Terraria.UI.Gamepad;
 
 namespace Reforged.Common.UI;
 
 /// <summary> Replaces the Tinkerer's default reforge menu. </summary>
 public class ReforgeMenu : AutoUI
 {
+    internal static Vector2 ButtonPosition { get; set; } = new Vector2(14, 0);
+    internal static Vector2 TextPosition { get; set; } = new Vector2(0, 50);
+
     private static Asset<Texture2D> redoTexture, gearTexture;
 
     private UIElement main;
@@ -34,7 +38,7 @@ public class ReforgeMenu : AutoUI
         reforgeButton = new(TextureAssets.Reforge[0]);
         reforgeButton.SetHoverImage(TextureAssets.Reforge[1]);
         reforgeButton.SetVisibility(1, 1);
-        reforgeButton.Left.Set(0, 0);
+        reforgeButton.Left.Set(ButtonPosition.X, 0);
         ShowButton(false);
         reforgeButton.OnLeftMouseDown += OnClickReforge;
 
@@ -72,7 +76,7 @@ public class ReforgeMenu : AutoUI
     private void ShowButton(bool value)
     {
         if (value)
-            reforgeButton.Top.Set(50, 0);
+            reforgeButton.Top.Set(50 + ButtonPosition.Y, 0);
         else
             reforgeButton.Top.Set(-999, 0);
     }
@@ -97,6 +101,8 @@ public class ReforgeMenu : AutoUI
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         base.DrawSelf(spriteBatch);
+
+        UILinkPointNavigator.SetPosition(304, reforgeButton.GetDimensions().Center());
 
         if (reforgeButton.IsMouseHovering)
         {
@@ -146,7 +152,7 @@ public class ReforgeMenu : AutoUI
             }
         }
 
-        Vector2 pos = main.GetDimensions().Position() + ((state is null) ? Vector2.Zero : new Vector2(0, 50));
+        var pos = main.GetDimensions().Position() + ((state is null) ? Vector2.Zero : TextPosition);
         string text = Lang.inter[46].Value + ": ";
 
         if (Main.reforgeItem.type > ItemID.None)
